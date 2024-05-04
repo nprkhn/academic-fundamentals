@@ -1,0 +1,95 @@
+\documentclass[]{seismica}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\begin{document}
+
+\tableofcontents
+\newpage
+    
+	\section{Modeling tuple suppression}
+	
+	Winkler has proposed using simulated annealing to attack the problem but provides no evidence of its efficacy. On the more theoretical side, Meyerson and Williams have recently proposed an approximation algorithm that achieves an anonymization within of optimal. The method remains to be tested in practice. The  below summarizes this set of known approaches    to the problem in terms of practicality and solution guarantees.
+
+\begin{table}[ht!]
+  \begin{tabular}{|c|c|c|}
+    \hline
+    algorithm & practical? & guarantee\\
+    \hline
+    Sweeney-Datafly & Y & none\\
+    \hline
+    Sweeney-MinGen & N & optimal\\
+    \hline
+    Samarati-AllMin & N & optimal\\
+    \hline
+    Iyengar-GA & Y & none\\
+    \hline
+    Winkler-Anneal & possible & none\\
+    \hline
+    Meyerson-Approax & possible, but only for small k using suppression alone & O(klogK) of optimal\\
+    \hline
+    our proposal & Y & optimal\\
+    \hline
+    
+  \end{tabular}
+  \caption{A breakdown of known approaches to k-Anonymity}
+  \label{tab:1}
+\end{table}
+
+In some cases, outliers in a dataset may necessitate significant generalization in order to achieve a -anonymization, resulting in unacceptable information loss. To fix this situation, we may choose to suppress outlier tuples by deleting them. More formally, given an anonymization of dataset , we say -transforms into the dataset where is the result of:
+
+   \begin{enumerate}
+       \item transforming into using as defined before, followed by;
+       \item deleting any tuple from belonging to an induced equivalence class of size less than.
+   \end{enumerate}
+
+
+   \section{Evaluation}
+       \subsection{Experimental}
+       Setup One goal of our experiments is to understand the performance of K-OPTIMIZE. Beyond this, the ability to quickly identify optimal solutions allows exploring many other interesting aspects of k-anonymization. For instance, we have noted that several variations on the problem have been proposed, including whether to allow (a bounded number of) suppressions, or whether to allow the algorithm to partition ordinal domains without hierarchy restrictions. Which variations are worthwhile in the sense that they produce “better” solutions? What is the impact of such extensions on performance? Another goal of the experiments is to begin addressing such concerns. The dataset used in our experiments was the adult census dataset from the Irvine machine learning repository, since this dataset is the closest to a common k-anonymization “benchmark” that we are aware of. This dataset was prepared as described by Iyengar to the best of our ability. It consists of 9 attributes (8 regular and one class column) and 30,162 records, and contains actual census data that has not already been anonymized. The so-coded dataset  supports partitioning of the age column at a very fine grain (one value for each unique age rounded to the nearest year). This resulted in a searchable alphabet of over 160 values. To understand the performance and cost impacts of using a coarser initial partitioning, we also experimented with another coding of the dataset in which the age column was “pre-generalized” into 15 unique values, each consisting of a 5 year age range.1 This reduced the alphabet to a more manageable but still challenging 100 unique values. (Recall that this results in a state space of size.) Coarser partitionings reduce the flexibility given to the algorithm in determining an anonymization. The algorithm was implemented in C++. All run-times are from a dedicated 2 processor, 2.8 GHZ Intel Xeon class machine running Linux OS (kernel version 2.4.20) and gcc v3.2.1. Only one processor was used by the algorithm during each run. We used the qsort C library function provided by gcc for all sorting operations.
+
+    \begin{figure}[ht!]
+       \includegraphics[width=15cm]{figure1}
+       \caption{Performance of the K-OPTIMIZE procedure}
+       \label{fig:3}
+    \end{figure}
+
+   \begin{figure}[ht!]
+       \includegraphics[width=15cm]{figure2}
+       \caption{Optimal solution cost}
+       \label{fig:4}
+   \end{figure}
+
+	\subsection{Results}
+	We explored the impacts of the following dimensions on performance and solution quality:
+
+    \begin{itemize}
+        \item The setting of specificially, we used values of 1000, 500, 250, 100, 50, 25, 10,and 5;
+        \item The number of suppressions allowed. Specificially, we ran the algorithm with no suppressions allowed, a limit of 100 suppressions, and with no restriction (denoted inf) on the number of suppressions;
+        \item The impact of seeding the algorithm with a non-infinite cost;
+        \item The impact of a coarse versus fine partitioning of the age column.
+    \end{itemize}
+
+    The first graphs (Figure~\ref{fig:3}) show the runtime when there is no cost seeding. Regarding cost of the optimal solutions (Figure~\ref{fig:4}), we found that the finely partitioned age column allowed for significant improvements in cost for both metrics.
+
+    \section{Computer cost lower-bounds}
+    Cost lower-bounds (Equation \ref{eq:2}) must be computed in a way that is specific to the particular cost metric being used. We can state the discernibility metric lower-bound formally as follows:
+    \begin{equation} \label{eq:2}
+    \mathrm{LM_{DM}(H,A)} = \sum_{\forall t \in D}
+    \begin{cases}
+        \left | D \right | \text{ when t is suppressed by H,}\\
+        max(\left | E_{A,t} \right |, k) \text{ otherwise}
+    \end{cases}
+    \end{equation}
+
+    In terms of sums of squares, maximizing within-groups homogeneity is equivalent to finding a k-partition minimizing the within-groups sum of squares SSE defined as
+
+    \begin{equation}
+        \mathrm{C_{CM}(g,k)} = \sum_{\forall E s.t. \left | E \right | > k}
+        (\left | (minority(E) \right |) + \sum_{\forall E s.t. \left | E \right | < k}
+        \left | E \right |
+    \end{equation}
+
+    where $\mathbf{g}$ is the number of groups in k-paritition;\\
+    $\mathbf{k}$ is a result of observing attributes.
+\end{document}
