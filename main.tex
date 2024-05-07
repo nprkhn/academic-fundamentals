@@ -1,3 +1,4 @@
+%\documentclass[]{acmart}
 \documentclass[]{seismica}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -78,7 +79,7 @@ In some cases, outliers in a dataset may necessitate significant generalization 
     \mathrm{LM_{DM}(H,A)} = \sum_{\forall t \in D}
     \begin{cases}
         \left | D \right | \text{ when t is suppressed by H,}\\
-        max(\left | E_{A,t} \right |, k) \text{ otherwise}
+        \max(\left | E_{A,t} \right |, k) \text{ otherwise}
     \end{cases}
     \end{equation}
 
@@ -90,6 +91,23 @@ In some cases, outliers in a dataset may necessitate significant generalization 
         \left | E \right |
     \end{equation}
 
-    where $\mathbf{g}$ is the number of groups in k-paritition;\\
-    $\mathbf{k}$ is a result of observing attributes.
+    where $g$ is the number of groups in k-paritition;\\
+    $k$ is a result of observing attributes.\\
+
+The first metric we use is one that attempts to capture in a straightforward way the desire to maintain discernibility between tuples as much as is allowed by a given setting of . This discernibility metric assigns a penalty to each tuple based on how many tuples in the transformed dataset are indistinguishable from it. If an unsuppressed tuple falls into an induced equivalence class of size , then that tuple is assigned a penalty of . If a tuple is suppressed, then it is assigned a penalty of , the size of the input dataset. This penalty reflects the fact that a suppressed tuple cannot be distinguished from any other tuple in the dataset. The metric can be mathematically stated as follows:
+
+    \begin{equation}
+        \mathrm{C_{DM}(g,k)} = \sum_{\forall E s.t. \left | E \right | > k}
+        \left | E \right |^2 + \sum_{\forall E s.t. \left | E \right | < k}
+        \left |D \right | \left | E \right |
+    \end{equation}
+
+    We now have that the powerset of the following alphabet precisely defines the entire set of anonymizations of the given dataset:
+
+    \begin{equation}
+        \Sigma_{all} = (\Sigma_1 / v_{l_1})
+        \cup (\Sigma_2/ v_{l_2})
+        \cup ...
+        \cup (\Sigma_m / v_{l_m})
+    \end{equation}
 \end{document}
