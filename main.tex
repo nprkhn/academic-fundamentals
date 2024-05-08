@@ -90,11 +90,12 @@ In some cases, outliers in a dataset may necessitate significant generalization 
         \mathrm{C_{CM}(g,k)} = \sum_{\forall E s.t. \left | E \right | > k}
         (\left | (minority(E) \right |) + \sum_{\forall E s.t. \left | E \right | < k}
         \left | E \right |,
-        \text{where}
     \end{equation}
-
-    $g$ is the number of groups in k-paritition;\\
-    $k$ is a result of observing attributes.\\
+    \emph{where}
+        \begin{itemize}
+            \item $g$ is the number of groups in k-paritition;
+            \item $k$ is a result of observing attributes
+        \end{itemize}
 
 The first metric we use is one that attempts to capture in a straightforward way the desire to maintain discernibility between tuples as much as is allowed by a given setting of . This discernibility metric assigns a penalty to each tuple based on how many tuples in the transformed dataset are indistinguishable from it. If an unsuppressed tuple falls into an induced equivalence class of size , then that tuple is assigned a penalty of . If a tuple is suppressed, then it is assigned a penalty of , the size of the input dataset. This penalty reflects the fact that a suppressed tuple cannot be distinguished from any other tuple in the dataset. The metric can be mathematically stated as follows:
 
