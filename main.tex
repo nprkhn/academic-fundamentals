@@ -27,7 +27,7 @@
     \hline
     Winkler-Anneal & possible & none\\
     \hline
-    Meyerson-Approax & possible, but only for small k using suppression alone & O(klogK) of optimal\\
+    Meyerson-Approax & possible, but only for small $k$ using suppression alone & O(klog$K$) of optimal\\
     \hline
     our proposal & Y & optimal\\
     \hline
@@ -73,12 +73,13 @@ In some cases, outliers in a dataset may necessitate significant generalization 
 
     The first graphs (Figure~\ref{fig:3}) show the runtime when there is no cost seeding. Regarding cost of the optimal solutions (Figure~\ref{fig:4}), we found that the finely partitioned age column allowed for significant improvements in cost for both metrics.
 
-    \section{Computer cost lower-bounds}
+\section{Computer cost lower-bounds}
+    
     Cost lower-bounds (Equation \ref{eq:2}) must be computed in a way that is specific to the particular cost metric being used. We can state the discernibility metric lower-bound formally as follows:
     \begin{equation} \label{eq:2}
     \mathrm{LM_{DM}(H,A)} = \sum_{\forall t \in D}
     \begin{cases}
-        \left | D \right | \text{ when t is suppressed by H,}\\
+        \left | D \right | \text{ when $t$ is suppressed by $H$,}\\
         \max(\left | E_{A,t} \right |, k) \text{ otherwise}
     \end{cases}
     \end{equation}
@@ -88,10 +89,11 @@ In some cases, outliers in a dataset may necessitate significant generalization 
     \begin{equation}
         \mathrm{C_{CM}(g,k)} = \sum_{\forall E s.t. \left | E \right | > k}
         (\left | (minority(E) \right |) + \sum_{\forall E s.t. \left | E \right | < k}
-        \left | E \right |
+        \left | E \right |,
+        \text{where}
     \end{equation}
 
-    where $g$ is the number of groups in k-paritition;\\
+    $g$ is the number of groups in k-paritition;\\
     $k$ is a result of observing attributes.\\
 
 The first metric we use is one that attempts to capture in a straightforward way the desire to maintain discernibility between tuples as much as is allowed by a given setting of . This discernibility metric assigns a penalty to each tuple based on how many tuples in the transformed dataset are indistinguishable from it. If an unsuppressed tuple falls into an induced equivalence class of size , then that tuple is assigned a penalty of . If a tuple is suppressed, then it is assigned a penalty of , the size of the input dataset. This penalty reflects the fact that a suppressed tuple cannot be distinguished from any other tuple in the dataset. The metric can be mathematically stated as follows:
