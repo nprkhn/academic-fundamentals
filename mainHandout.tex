@@ -1,0 +1,140 @@
+\documentclass[handout]{beamer}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{handoutWithNotes}
+\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
+\usetheme{Warsaw}
+\usecolortheme{default}
+
+\title{Сравнение методов анонимизации данных}
+\author{Непряхин А.С.}
+\date{Май 2024}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+    \frametitle{Оглавление}
+    \tableofcontents
+\end{frame}
+
+\section{Введение}
+\begin{frame}
+    \frametitle{Введение}
+    
+     \begin{figure}[ht!]
+       \includegraphics[width= 7 cm]{figure1}
+       \caption{Процесс анонимизации данных}
+       \label{fig:1}
+   \end{figure}
+   
+    \begin{itemize}
+        \item В современном мире необходимо уметь скрывать личную информацию в интернет-ресурсах
+        \item Более 5 методов анонимизации данных
+        \item Проведем исследования, сравним различные методы анонимизации и найдем наиболее эффективный
+    \end{itemize}
+\end{frame}
+
+\section{Методы анонимизации данных}
+\begin{frame}
+    \frametitle{Методы анонимизации данных}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{figure}[ht!]
+       \includegraphics[width= 5 cm]{figure2}
+       \label{fig:2}
+   \end{figure}
+
+        \column{0.7\textwidth}
+       \begin{itemize}
+       
+        \item K-Anonymity(K-Анонимность)
+        
+        \item Data masking(Маскировка данных)
+        
+        \item Pseudonymization(Псевдонимизация)
+        
+        \item Synthetic data(Синтетические данные)
+    \end{itemize}
+    \end{columns}
+\end{frame}
+
+\subsection{Data masking}
+\begin{frame}
+    \frametitle{Data masking}
+
+    Самый популярный и широко используемый метод анонимизации данных
+
+    \begin{figure}[ht!]
+       \includegraphics[width= 7 cm]{figure3}
+       \caption{Техники маскировки данных}
+       \label{fig:3}
+   \end{figure}
+\end{frame}
+
+\subsection{K-Anonymity}
+\begin{frame}
+    \frametitle{K-Anonymity}
+
+    Был проведен \alert{эксперимент} по исследованию эффективности метода K-Anonymity
+
+    \begin{figure}[ht!]
+       \includegraphics[width= 7 cm]{figure4}
+       \caption{Результаты эксперимента}
+       \label{fig:4}
+   \end{figure}
+\end{frame}
+
+\subsubsection{Расчет эффективности метода K-Anonymity}
+\begin{frame}
+    \frametitle{Расчет эффективности метода K-Anonymity}
+
+     $$
+        \mathrm{C_{DM}(g,k)} = \sum_{\forall E s.t. \left | E \right | > k}
+        \left | E \right |^2 + \sum_{\forall E s.t. \left | E \right | < k}
+        \left |D \right | \left | E \right |
+    $$
+\end{frame}
+
+\subsubsection{Недостатки использования метода K-Anonymity}
+\begin{frame}
+    \frametitle{Недостатки использования метода K-Anonymity}
+
+    \begin{block}{Главные недостатки K-Anonymity}
+        \begin{itemize}
+            \item Сбор сайтами файлов Cookie
+            \item Сбор сайтами IP-адресов
+        \end{itemize}
+    \end{block}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{figure}[ht!]
+       \includegraphics[width= 5 cm]{figure5}
+       \label{fig:5}
+   \end{figure}
+
+   \column{0.5\textwidth}
+   \begin{figure}[ht!]
+       \includegraphics[width= 5 cm]{figure6}
+       \label{fig:6}
+   \end{figure}
+    \end{columns}
+\end{frame}
+
+\section{Заключение}
+\begin{frame}
+    \frametitle{Заключение}
+    
+    Результаты проведенного эксперимента, приведение главных преимуществ метода K-Anonymity и сравнение недостатков указанного метода с другими существующими методами в совокупности показывают превосходность метода K-Anonymity над другими существующими методами
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Huge{СПАСИБО ЗА ВНИМАНИЕ!}
+    \end{center}
+\end{frame}
+\end{document}
